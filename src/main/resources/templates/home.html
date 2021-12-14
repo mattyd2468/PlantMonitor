@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/navBar.css">
+    <script src="javascript/navBar.js"></script>
+    <title>Home</title>
+</head>
+<body>
+<div class="topnav" id="myTopnav">
+    <a th:href="@{home}" class="active">Home</a></a>
+    <a th:href="@{addRemovePlant}">Add/Remove Plant</a>
+    <a th:href="@{addRemoveSensor}">Add/Remove Sensor</a>
+    <a th:href="@{assignSensor}">Assign Sensor</a>
+    <a href="javascript:void(0);" class="icon" onclick="responsiveNavBar()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+<h1>Hello !!!</h1>
+<p>Welcome to <span th:text="${appName}">Our App</span></p>
+</body>
+</html>

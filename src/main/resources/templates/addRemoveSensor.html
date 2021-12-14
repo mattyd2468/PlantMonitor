@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/navBar.css">
+    <script src="javascript/navBar.js"></script>
+    <title>Add/Remove Sensor</title>
+</head>
+<body>
+<div class="topnav" id="myTopnav">
+    <a th:href="@{home}">Home</a></a>
+    <a th:href="@{addRemovePlant}">Add/Remove Plant</a>
+    <a th:href="@{addRemoveSensor}"  class="active">Add/Remove Sensor</a>
+    <a th:href="@{assignSensor}">Assign Sensor</a>
+    <a href="javascript:void(0);" class="icon" onclick="responsiveNavBar()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+<h1>Add Plant</h1>
+<h1>Remove Plant</h1>
+<p>Welcome to <span th:text="${appName}">Our App</span></p>
+</body>
+</html>
