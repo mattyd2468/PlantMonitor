@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/navBar.css">
@@ -9,30 +10,34 @@
     <script src="javascript/addRemovePlant.js"></script>
     <title>Add/Remove Plant</title>
 </head>
+
 <body>
 <div class="topnav" id="myTopnav">
     <a th:href="@{home}">Home</a>
-    <a th:href="@{addRemovePlant}"  class="active">Add/Remove Plant</a>
+    <a th:href="@{addRemovePlant}" class="active">Add/Remove Plant</a>
     <a th:href="@{addRemoveSensor}">Add/Remove Sensor</a>
     <a th:href="@{assignSensor}">Assign Sensor</a>
     <a href="javascript:void(0);" class="icon" onclick="responsiveNavBar()">
         <i class="fa fa-bars"></i>
     </a>
 </div>
-<h1>Add Plant</h1>
-<p>Choose plant type</p>
-<div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div class="dropdown-content-add">
-        <p>Other</p>
+<div class="page-container">
+    <h1>Add Plant</h1>
+    <p>Choose plant type</p>
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content-add">
+            <p>Other</p>
+        </div>
     </div>
-</div>
-<h1>Remove Plant</h1>
-<div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
-    <div class="dropdown-content-remove">
-        <p>Other</p>
+    <h1>Remove Plant</h1>
+    <p>Please choose the plant you want to remove from the dropdown</p>
+    <div class="dropdown">
+        <button class="dropbtn">Choose Plant</button>
+        <div class="dropdown-content-remove">
+        </div>
     </div>
 </div>
 </body>
+
 </html>
