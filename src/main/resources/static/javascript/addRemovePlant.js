@@ -6,7 +6,8 @@ $(document).ready(function() {
         dataType: 'json', // added data type
         success: function(res) {
             for (var x = 0; x < res.length; x++) {
-                $(".dropdown-content-add").append("<p>" + res[x].name + "</p>");
+                //$(".dropdown-content-add").append("<p>" + res[x].name + "</p>");
+                $("#type").append("<option value=\"" + res[x].name + "\">" + res[x].name + "</option>");
             }
         }
     });
@@ -39,4 +40,29 @@ function deletePlantWithId(id) {
 
     }
     return false;
+}
+
+function addPlant() {
+    $.ajax({
+        url: "/getLookupId/" + $('#type').val(),
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            var name = $('#name').val();
+            var location = $('#location').val();
+            var lookupId = res;
+            var requestBody = '{"name": "' + name + '", "location": "' + location + '", "lookupId": "' + lookupId + '"}';
+            console.log(requestBody);
+            requestBody = JSON.parse(requestBody);
+            //AJAX post request
+            $.ajax({
+                type: "POST",
+                url: "/addPlant",
+                // The key needs to match your method's input parameter (case-sensitive).
+                data: JSON.stringify(requestBody),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
+        }
+    });
 }

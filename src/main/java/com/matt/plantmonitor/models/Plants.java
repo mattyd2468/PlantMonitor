@@ -1,16 +1,16 @@
 package com.matt.plantmonitor.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(name="plants")
 @Entity
 public class Plants {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
+
+    private int lookupId;
 
     private String name;
 
@@ -24,6 +24,14 @@ public class Plants {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getLookupId() {
+        return lookupId;
+    }
+
+    public void setLookupId(int lookupId) {
+        this.lookupId = lookupId;
     }
 
     public String getName() {
@@ -48,5 +56,10 @@ public class Plants {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String toString(){
+
+        return (String.format("ID = %s LookupID = %s Name = %s Location = %s Status = %s",id, lookupId,name,location, status));
     }
 }

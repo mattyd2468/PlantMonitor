@@ -23,13 +23,18 @@
 </div>
 <div class="page-container">
     <h1>Add Plant</h1>
-    <p>Choose plant type</p>
-    <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
-        <div class="dropdown-content-add">
-            <p>Other</p>
-        </div>
-    </div>
+    <p>Please use the below form to enter your new plants details</p>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location"><br>
+        <label for="type">Choose a plant type or 'Other' if not available:</label><br>
+        <select id="type" name="type">
+            <option>Other</option>
+        </select><br><br>
+        <button onclick = "addPlant()">Submit</button>
+
     <h1>Remove Plant</h1>
     <p>Please choose the plant you want to remove from the dropdown</p>
     <div class="dropdown">
