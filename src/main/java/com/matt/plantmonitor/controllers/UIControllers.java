@@ -13,14 +13,12 @@ public class UIControllers {
     @GetMapping("/")
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
-        //jdbc.execute("insert into plantmonitordb.plantlookup values(2,'money plant', null, 'description')");
         return "home";
     }
 
     @GetMapping("/home")
     public String alsoHomePage(Model model) {
         model.addAttribute("appName", appName);
-        //jdbc.execute("insert into plantmonitordb.plantlookup values(2,'money plant', null, 'description')");
         return "home";
     }
 
