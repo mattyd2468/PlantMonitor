@@ -2,8 +2,10 @@ package com.matt.plantmonitor.controllers;
 
 import com.matt.plantmonitor.models.PlantLookup;
 import com.matt.plantmonitor.models.Plants;
+import com.matt.plantmonitor.models.Sensors;
 import com.matt.plantmonitor.repository.PlantLookupRepository;
 import com.matt.plantmonitor.repository.PlantsRepository;
+import com.matt.plantmonitor.repository.SensorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,9 @@ public class APIControllers {
 
     @Autowired
     private PlantsRepository plantsRepository;
+
+    @Autowired
+    private SensorsRepository sensorsRepository;
 
     @GetMapping(path="/getPlantLookup")
     public @ResponseBody
@@ -38,18 +43,42 @@ public class APIControllers {
 
     @PostMapping(path="/addPlant", consumes="application/json")
     public @ResponseBody String addNewPlant (@RequestBody Plants plants) {
-        // @ResponseBody means the returned String is the response, not a view name
-        System.out.println(plants.toString());// @RequestParam means it is a parameter from the GET or POST request
         plantsRepository.save(plants);
         System.out.println("Added plant with the following details: " + plants.toString());
         return "plant added";
     }
 
-    @GetMapping(path="/getLookupId/{name}")
+    @GetMapping(path="/getLookupId/PlantLookup/{name}")
     public @ResponseBody
     int getLookupId(@PathVariable String name) {
         System.out.println("Getting lookup ID of plant type " + name);
         return plantLookupRepository.getLookupIdByName(name);
     }
 
+    @GetMapping(path="/getSensors")
+    public @ResponseBody
+    Iterable<Sensors> getSensors() {
+        System.out.println("Getting all sensors from sensors database table");
+        return sensorsRepository.findAll();
+    }
+
+    @DeleteMapping(path="/deleteSensor/{id}")
+    public String deleteSensorById(@PathVariable int id) {
+        sensorsRepository.deleteById(id);
+        return("Deleted sensor with id " + id);
+    }
+
+    @GetMapping(path="/getLookupId/Plants/{name}")
+    public @ResponseBody
+    int getPlantsLookupId(@PathVariable String name) {
+        System.out.println("Getting lookup ID of plant " + name);
+        return plantsRepository.getLookupIdByName(name);
+    }
+
+    @PostMapping(path="/addSensor", consumes="application/json")
+    public @ResponseBody String addNewSensor (@RequestBody Sensors sensors) {
+        sensorsRepository.save(sensors);
+        //System.out.println("Added plant with the following details: " + plants.toString());
+        return "sensor added";
+    }
 }

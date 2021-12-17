@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/navBar.css">
+    <link rel="stylesheet" href="styles/addRemoveSensor.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascript/navBar.js"></script>
+    <script src="javascript/addRemoveSensor.js"></script>
     <title>Add/Remove Sensor</title>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
-    <a th:href="@{home}">Home</a></a>
+    <a th:href="@{home}">Home</a>
     <a th:href="@{addRemovePlant}">Add/Remove Plant</a>
     <a th:href="@{addRemoveSensor}"  class="active">Add/Remove Sensor</a>
     <a th:href="@{assignSensor}">Assign Sensor</a>
@@ -16,8 +19,25 @@
         <i class="fa fa-bars"></i>
     </a>
 </div>
-<h1>Add Plant</h1>
-<h1>Remove Plant</h1>
-<p>Welcome to <span th:text="${appName}">Our App</span></p>
+<div class="page-container">
+<h1>Add Sensor</h1>
+    <p>Please use the below form to enter your new plants details</p>
+    <label for="plant">Choose the plant you want to add your sensor to:</label><br>
+    <select id="plant" name="plant">
+        <option>Other</option>
+    </select><br><br>
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="uom">Unit Of Measurement:</label><br>
+    <input type="text" id="uom" name="uom"><br>
+    <button onclick = "addSensor()">Submit</button>
+<h1>Remove Sensor</h1>
+    <p>Please choose the sensor you want to remove from the dropdown</p>
+<div class="dropdown">
+    <button class="dropbtn">Choose Sensor</button>
+    <div class="dropdown-content-remove">
+    </div>
+</div>
+</div>
 </body>
 </html>
