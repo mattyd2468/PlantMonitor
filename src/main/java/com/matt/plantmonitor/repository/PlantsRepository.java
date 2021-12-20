@@ -10,4 +10,9 @@ public interface PlantsRepository extends CrudRepository<Plants, Integer> {
             nativeQuery = true)
     int getLookupIdByName(
             @Param("name") String name);
+
+    @Query(value = "SELECT * FROM plants p WHERE p.id = :id",
+            nativeQuery = true)
+    Plants getPlantById(
+            @Param("id") String id);
 }

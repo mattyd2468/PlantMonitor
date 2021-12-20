@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/navBar.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="javascript/navBar.js"></script>
+    <script src="javascript/home.js"></script>
     <title>Home</title>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
-    <a th:href="@{home}" class="active">Home</a></a>
+    <a th:href="@{home}" class="active">Home</a>
     <a th:href="@{addRemovePlant}">Add/Remove Plant</a>
     <a th:href="@{addRemoveSensor}">Add/Remove Sensor</a>
     <a th:href="@{assignSensor}">Assign Sensor</a>
@@ -19,5 +22,14 @@
 </div>
 <h1>Hello !!!</h1>
 <p>Welcome to <span th:text="${appName}">Our App</span></p>
+<p>Please choose the plant you would like to see the status of</p>
+<div class="dropdown">
+    <button class="dropbtn">Choose Plant</button>
+    <div class="dropdown-content">
+    </div>
+</div>
+<div class="plant-details">
+
+</div>
 </body>
 </html>

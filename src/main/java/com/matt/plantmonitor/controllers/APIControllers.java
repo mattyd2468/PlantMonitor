@@ -37,6 +37,8 @@ public class APIControllers {
 
     @DeleteMapping(path="/deletePlant/{id}")
     public String deletePlantById(@PathVariable int id) {
+        //TODO add service code to check if plant has any sensors and to delete
+        //these sensors before deleting the plant
         plantsRepository.deleteById(id);
         return("Deleted plant with id " + id);
     }
@@ -81,4 +83,12 @@ public class APIControllers {
         //System.out.println("Added plant with the following details: " + plants.toString());
         return "sensor added";
     }
+
+    @GetMapping(path="/getSinglePlant/ById/{id}")
+    public @ResponseBody
+    Plants getPlantById(@PathVariable String id) {
+        System.out.println("Getting details of plant " + id);
+        return plantsRepository.getPlantById(id);
+    }
+
 }
