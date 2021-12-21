@@ -31,7 +31,7 @@ class PlantsTests {
         testPlants.setLookupId(2);
         testPlants.setStatus("status");
         testPlants.setId(1);
-        String expected ="ID = 1 LookupID = 2 Name = name Location = location Status = status";
+        String expected = "ID = 1 LookupID = 2 Name = name Location = location Status = status";
         Assertions.assertNotNull(testPlants);
         Assertions.assertEquals(expected, testPlants.toString());
 

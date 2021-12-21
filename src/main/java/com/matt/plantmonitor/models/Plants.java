@@ -2,12 +2,12 @@ package com.matt.plantmonitor.models;
 
 import javax.persistence.*;
 
-@Table(name="plants")
+@Table(name = "plants")
 @Entity
 public class Plants {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private int lookupId;
@@ -58,8 +58,8 @@ public class Plants {
         this.status = status;
     }
 
-    public String toString(){
+    public String toString() {
 
-        return (String.format("ID = %s LookupID = %s Name = %s Location = %s Status = %s",id, lookupId,name,location, status));
+        return (String.format("ID = %s LookupID = %s Name = %s Location = %s Status = %s", id, lookupId, name, location, status));
     }
 }
