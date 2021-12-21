@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class PlantLookup {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -59,9 +59,6 @@ public class PlantLookup {
     public void setLatin(String latin) {
         this.latin = latin;
     }
-
-
-
 
 
 }

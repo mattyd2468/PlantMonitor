@@ -2,12 +2,12 @@ package com.matt.plantmonitor.models;
 
 import javax.persistence.*;
 
-@Table(name="sensors")
+@Table(name = "sensors")
 @Entity
 public class Sensors {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private int lookupId;

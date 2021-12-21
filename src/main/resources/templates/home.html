@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -10,6 +11,7 @@
     <script src="javascript/home.js"></script>
     <title>Home</title>
 </head>
+
 <body>
 <div class="topnav" id="myTopnav">
     <a th:href="@{home}" class="active">Home</a>
@@ -20,16 +22,29 @@
         <i class="fa fa-bars"></i>
     </a>
 </div>
-<h1>Hello !!!</h1>
-<p>Welcome to <span th:text="${appName}">Our App</span></p>
-<p>Please choose the plant you would like to see the status of</p>
-<div class="dropdown">
-    <button class="dropbtn">Choose Plant</button>
-    <div class="dropdown-content">
+<div class="page-container">
+    <h1>Welcome to <span th:text="${appName}">Our App</span></h1>
+    <p>Please choose the plant you would like to see the status of</p>
+    <div class="dropdown">
+        <button class="dropbtn">Choose Plant</button>
+        <div class="dropdown-content">
+        </div>
     </div>
-</div>
-<div class="plant-details">
+    <div class="plant-details">
+    </div>
+    <table id="readings">
+        <thead>
+        <tr>
+            <th>Sensor Name</th>
+            <th>Reading</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody class="tableBody">
 
+        </tbody>
+    </table>
 </div>
 </body>
+
 </html>
