@@ -2,6 +2,7 @@ package com.matt.plantmonitor.controllers;
 
 import com.matt.plantmonitor.models.*;
 import com.matt.plantmonitor.repository.*;
+import com.matt.plantmonitor.services.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,9 @@ public class APIControllers {
 
     @Autowired
     private AcceptableRangeRepository acceptableRangeRepository;
+
+    @Autowired
+    private StatusService statusService;
 
     @GetMapping(path = "/getPlantLookup")
     public @ResponseBody
@@ -108,6 +112,23 @@ public class APIControllers {
    AcceptableRange getAcceptableRangeBySensorId(@PathVariable String id) {
         System.out.println("Getting acceptable range of sensor " + id);
         return acceptableRangeRepository.getAcceptableRangeBySensorId(id);
+    }
+
+    @PutMapping(path = "/updateStatus", consumes = "application/json")
+    public @ResponseBody
+    String updateStatus() {
+        Iterable<Plants> allPlants = plantsRepository.findAll();
+        for(Plants plant : allPlants){
+            statusService.updateStatus(plant);
+        }
+        return "All plant status' updated";
+    }
+
+    @PutMapping(path = "/updateSingleStatus", consumes = "application/json")
+    public @ResponseBody
+    String updateStatusSinglePlant(@RequestBody Plants plant) {
+        statusService.updateStatus(plant);
+        return "Status updated with details: " + plant.toString();
     }
 
 }
