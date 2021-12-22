@@ -1,4 +1,15 @@
 $(document).ready(function() {
+     $.ajax({
+            url: "/updateStatus",
+            type: 'PUT',
+            dataType: 'json',
+            data: null,
+            contentType: "application/json; charset=utf-8",
+            success: function(res) {
+            }
+        });
+
+
     $('#readings').hide();
     //Load dropdown for choosing which plant to display the details of
     $.ajax({

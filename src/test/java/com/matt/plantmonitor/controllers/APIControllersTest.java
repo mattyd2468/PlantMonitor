@@ -3,8 +3,10 @@ package com.matt.plantmonitor.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matt.plantmonitor.models.*;
 import com.matt.plantmonitor.repository.*;
+import com.matt.plantmonitor.services.StatusService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,12 +46,17 @@ public class APIControllersTest {
     @MockBean
     private AcceptableRangeRepository acceptableRangeRepository;
 
+    @MockBean
+    StatusService statusService;
+
     PlantLookup testPlantLookup1 = new PlantLookup();
     PlantLookup testPlantLookup2 = new PlantLookup();
     Plants testPlants1 = new Plants();
     Plants testPlants2 = new Plants();
     Sensors testSensors1 = new Sensors();
     Sensors testSensors2 = new Sensors();
+    Sensors testSensors3 = new Sensors();
+    Sensors testSensors4 = new Sensors();
     Readings testReadings1 = new Readings();
     Readings testReadings2 = new Readings();
     AcceptableRange testAcceptableRange1 = new AcceptableRange();
@@ -87,15 +94,41 @@ public class APIControllersTest {
         testSensors2.setUnitOfMeasurement("unit of measurement");
         testSensors2.setLookupId(2);
         testSensors2.setId(2);
+        testSensors3.setName("name3");
+        testSensors3.setUnitOfMeasurement("unit of measurement");
+        testSensors3.setLookupId(2);
+        testSensors3.setId(3);
+        testSensors4.setName("name4");
+        testSensors4.setUnitOfMeasurement("unit of measurement");
+        testSensors4.setLookupId(2);
+        testSensors4.setId(4);
 
+        //readings for plant 1
         testReadings1.setId(1);
-        testReadings1.setPlantLookupId(2);
+        testReadings1.setPlantLookupId(1);
         testReadings1.setSensorLookupId(3);
         testReadings1.setReading(2.03f);
         testReadings1.setSensorName("sensor name");
         testReadings1.setUnitOfMeasurement("uom");
         testReadings1.setTimestamp("Tue, 21 Dec 2021 17:01:39");
         testReadings2.setId(2);
+        testReadings2.setPlantLookupId(1);
+        testReadings2.setSensorLookupId(4);
+        testReadings2.setReading(2.03f);
+        testReadings2.setSensorName("sensor name2");
+        testReadings2.setUnitOfMeasurement("uom");
+        testReadings2.setTimestamp("Tue, 21 Dec 2021 17:01:39");
+
+        //reading1 is in bounds
+        testReadings1.setId(3);
+        testReadings1.setPlantLookupId(2);
+        testReadings1.setSensorLookupId(3);
+        testReadings1.setReading(2.03f);
+        testReadings1.setSensorName("sensor name");
+        testReadings1.setUnitOfMeasurement("uom");
+        testReadings1.setTimestamp("Tue, 21 Dec 2021 17:01:39");
+        //reading 2 out of bounds
+        testReadings2.setId(4);
         testReadings2.setPlantLookupId(2);
         testReadings2.setSensorLookupId(4);
         testReadings2.setReading(2.03f);
@@ -103,16 +136,18 @@ public class APIControllersTest {
         testReadings2.setUnitOfMeasurement("uom");
         testReadings2.setTimestamp("Tue, 21 Dec 2021 17:01:39");
 
+        //sensor 3 + 4
         testAcceptableRange1.setId(1);
-        testAcceptableRange1.setPlantLookupId(2);
+        testAcceptableRange1.setPlantLookupId(1);
         testAcceptableRange1.setSensorLookupId(3);
-        testAcceptableRange1.setLowerBoundry(5);
+        testAcceptableRange1.setLowerBoundry(1);
         testAcceptableRange1.setUpperBoundry(10);
         testAcceptableRange2.setId(2);
         testAcceptableRange2.setPlantLookupId(2);
         testAcceptableRange2.setSensorLookupId(4);
         testAcceptableRange2.setLowerBoundry(3);
         testAcceptableRange2.setUpperBoundry(13);
+
     }
 
     @Test
@@ -253,4 +288,36 @@ public class APIControllersTest {
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.upperBoundry", is(10.0)));
     }
+
+    @Test
+    public void updateStatus_success() throws Exception {
+        List<Plants> plants = new ArrayList<>(Arrays.asList(testPlants1, testPlants2));
+        Mockito.when(plantsRepository.findAll()).thenReturn(plants);
+        mockMvc.perform(MockMvcRequestBuilders
+                .put("/updateStatus")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapper.writeValueAsString(testPlants1)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$", is( "All plant status' updated")));
+    }
+
+    @Test
+    public void updateSingleStatus_success() throws Exception {
+        /*List<Readings> readings = new ArrayList<>(Arrays.asList(testReadings1, testReadings2));
+        Mockito.when(readingsRepository.getLatestReadingsById(String.valueOf(testPlants1.getId()))).thenReturn(readings);
+        Mockito.when(acceptableRangeRepository.getAcceptableRangeBySensorId(String.valueOf(testReadings1.getSensorLookupId()))).thenReturn(testAcceptableRange1);
+        Mockito.when(acceptableRangeRepository.getAcceptableRangeBySensorId(String.valueOf(testReadings2.getSensorLookupId()))).thenReturn(testAcceptableRange2);
+        Mockito.when(plantsRepository.save(Mockito.any())).thenReturn(testPlants1);
+        testPlants1.setStatus("Amber");*/
+            mockMvc.perform(MockMvcRequestBuilders
+                    .put("/updateSingleStatus")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(this.mapper.writeValueAsString(testPlants1)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", notNullValue()))
+                    .andExpect(jsonPath("$", is( "Status updated with details: " + testPlants1.toString())));
+        }
 }
