@@ -43,10 +43,21 @@ public class APIControllers {
 
     @DeleteMapping(path = "/deletePlant/{id}")
     public String deletePlantById(@PathVariable int id) {
-        //TODO add service code to check if plant has any sensors and to delete
-        //these sensors before deleting the plant
+        //delete readings
+        readingsRepository.deleteReadingsByPlantId(String.valueOf(id));
+        //delete acceptable range
+        acceptableRangeRepository.deleteAcceptableRangeByPlantId(String.valueOf(id));
+        //delete sensors
+        sensorsRepository.deleteSensorsByPlantId(String.valueOf(id));
+        //delete plant
         plantsRepository.deleteById(id);
         return ("Deleted plant with id " + id);
+    }
+
+    @DeleteMapping(path = "/deleteReadings/ByPlantId/{id}")
+    public String deleteReadingsByPlantId(@PathVariable String id) {
+        readingsRepository.deleteReadingsByPlantId(id);
+        return ("Deleted readings for plant with id " + id);
     }
 
     @PostMapping(path = "/addPlant", consumes = "application/json")
@@ -73,6 +84,11 @@ public class APIControllers {
 
     @DeleteMapping(path = "/deleteSensor/{id}")
     public String deleteSensorById(@PathVariable int id) {
+        //delete readings
+        readingsRepository.deleteReadingsBySensorId(String.valueOf(id));
+        //delete acceptable range
+        acceptableRangeRepository.deleteAcceptableRangeBySensorId(String.valueOf(id));
+        //delete sensor
         sensorsRepository.deleteById(id);
         return ("Deleted sensor with id " + id);
     }

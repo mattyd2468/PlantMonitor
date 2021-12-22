@@ -234,6 +234,16 @@ public class APIControllersTest {
     }
 
     @Test
+    public void deleteReadingsByPlantId_success() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/deleteReadings/ByPlantId/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$", is("Deleted readings for plant with id 1")));
+    }
+
+    @Test
     public void deleteSensorById_success() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/deleteSensor/2")
