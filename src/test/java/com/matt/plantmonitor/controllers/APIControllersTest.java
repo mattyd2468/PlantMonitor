@@ -1,14 +1,8 @@
 package com.matt.plantmonitor.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matt.plantmonitor.models.PlantLookup;
-import com.matt.plantmonitor.models.Plants;
-import com.matt.plantmonitor.models.Readings;
-import com.matt.plantmonitor.models.Sensors;
-import com.matt.plantmonitor.repository.PlantLookupRepository;
-import com.matt.plantmonitor.repository.PlantsRepository;
-import com.matt.plantmonitor.repository.ReadingsRepository;
-import com.matt.plantmonitor.repository.SensorsRepository;
+import com.matt.plantmonitor.models.*;
+import com.matt.plantmonitor.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,6 +41,9 @@ public class APIControllersTest {
     @MockBean
     private ReadingsRepository readingsRepository;
 
+    @MockBean
+    private AcceptableRangeRepository acceptableRangeRepository;
+
     PlantLookup testPlantLookup1 = new PlantLookup();
     PlantLookup testPlantLookup2 = new PlantLookup();
     Plants testPlants1 = new Plants();
@@ -55,6 +52,8 @@ public class APIControllersTest {
     Sensors testSensors2 = new Sensors();
     Readings testReadings1 = new Readings();
     Readings testReadings2 = new Readings();
+    AcceptableRange testAcceptableRange1 = new AcceptableRange();
+    AcceptableRange testAcceptableRange2 = new AcceptableRange();
 
     @BeforeEach
     public void setUp() {
@@ -103,6 +102,17 @@ public class APIControllersTest {
         testReadings2.setSensorName("sensor name2");
         testReadings2.setUnitOfMeasurement("uom");
         testReadings2.setTimestamp("Tue, 21 Dec 2021 17:01:39");
+
+        testAcceptableRange1.setId(1);
+        testAcceptableRange1.setPlantLookupId(2);
+        testAcceptableRange1.setSensorLookupId(3);
+        testAcceptableRange1.setLowerBoundry(5);
+        testAcceptableRange1.setUpperBoundry(10);
+        testAcceptableRange2.setId(2);
+        testAcceptableRange2.setPlantLookupId(2);
+        testAcceptableRange2.setSensorLookupId(4);
+        testAcceptableRange2.setLowerBoundry(3);
+        testAcceptableRange2.setUpperBoundry(13);
     }
 
     @Test
@@ -115,7 +125,6 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].name", is("name2")));
-
     }
 
     @Test
@@ -128,7 +137,6 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].name", is("name2")));
-
     }
 
     @Test
@@ -141,7 +149,6 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[1].name", is("name2")));
-
     }
 
     @Test
@@ -153,7 +160,6 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$.name", is("name")));
-
     }
 
     @Test
@@ -211,7 +217,6 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$", is(2)));
-
     }
 
     @Test
@@ -225,7 +230,6 @@ public class APIControllersTest {
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$",notNullValue()))
                 .andExpect(jsonPath("$[1].sensorName", is("sensor name2")));
-
     }
 
     @Test
@@ -237,6 +241,16 @@ public class APIControllersTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
                 .andExpect(jsonPath("$", is(1)));
+    }
 
+    @Test
+    public void getAcceptableRangeBySensorId_success() throws Exception {
+        Mockito.when(acceptableRangeRepository.getAcceptableRangeBySensorId("3")).thenReturn(testAcceptableRange1);
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/getAcceptableBounds/singleSensor/3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$.upperBoundry", is(10.0)));
     }
 }

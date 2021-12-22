@@ -1,16 +1,13 @@
 package com.matt.plantmonitor.controllers;
 
-import com.matt.plantmonitor.models.PlantLookup;
-import com.matt.plantmonitor.models.Plants;
-import com.matt.plantmonitor.models.Readings;
-import com.matt.plantmonitor.models.Sensors;
+import com.matt.plantmonitor.models.*;
 import com.matt.plantmonitor.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class APIControllers {
-
+//TODO - split this controller into a different controller for each Repository Class
     @Autowired
     private PlantLookupRepository plantLookupRepository;
 
@@ -22,6 +19,9 @@ public class APIControllers {
 
     @Autowired
     private ReadingsRepository readingsRepository;
+
+    @Autowired
+    private AcceptableRangeRepository acceptableRangeRepository;
 
     @GetMapping(path = "/getPlantLookup")
     public @ResponseBody
@@ -102,4 +102,12 @@ public class APIControllers {
         System.out.println("Getting readings of plant " + id);
         return readingsRepository.getLatestReadingsById(id);
     }
+
+    @GetMapping(path = "/getAcceptableBounds/singleSensor/{id}")
+    public @ResponseBody
+   AcceptableRange getAcceptableRangeBySensorId(@PathVariable String id) {
+        System.out.println("Getting acceptable range of sensor " + id);
+        return acceptableRangeRepository.getAcceptableRangeBySensorId(id);
+    }
+
 }

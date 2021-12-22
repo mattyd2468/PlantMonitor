@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#readings').hide();
-    //Load dropdown for choosing which plant to remove with all current plants
+    //Load dropdown for choosing which plant to display the details of
     $.ajax({
         url: "/getPlants",
         type: 'GET',
@@ -17,6 +17,7 @@ $(document).ready(function() {
     });
 });
 
+//function to get details of a single plant. including its latest readings
 function displayDetails(plantID) {
     $.ajax({
         url: "/getSinglePlant/ById/" + plantID,
@@ -32,9 +33,10 @@ function displayDetails(plantID) {
                 dataType: 'json', // added data type
                 success: function(res) {
                     for (var x = 0; x < res.length; x++) {
-                        //console.log('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td></tr>');
                         $('#readings').show();
-                        $('.tableBody').append('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + ' ' + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td></tr>');
+                        $('.tableBody').append('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + ' ' + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td><td id = "bounds' + res[x].sensorLookupId + '"></td></tr>');
+                        console.log('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + ' ' + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td><td id = "bounds' + res[x].sensorLookupId + '"></td></tr>');
+                        isWithinBounds(res[x].sensorLookupId, res[x].reading);
                     }
                 },
                 error: function(e) {
@@ -44,6 +46,28 @@ function displayDetails(plantID) {
         },
         error: function(e) {
             alert("Error fetching plant. Please try again later.")
+        }
+    });
+}
+
+//function to check if a reading is within acceptable bounds and to display the result
+function isWithinBounds(sensorId, sensorReading) {
+    $.ajax({
+        url: "/getAcceptableBounds/singleSensor/" + sensorId,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+        //TODO - Put this logic in Java instead
+            var id = '#bounds' + sensorId;
+            if (sensorReading == null) {
+                $(id).append("Acceptable range is not available");
+            } else if (sensorReading > res.upperBoundry) {
+                $(id).append("Reading is above the upper boundary");
+            } else if (sensorReading < res.lowerBoundry) {
+                $(id).append("Reading is below the lower boundary");
+            } else {
+                $(id).append("Reading is within acceptable range");
+            }
         }
     });
 }
