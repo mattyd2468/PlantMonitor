@@ -20,17 +20,20 @@
     </a>
 </div>
 <div class="page-container">
+    <div class="left">
 <h1>Add Sensor</h1>
     <p>Please use the below form to enter your new plants details</p>
     <label for="plant">Choose the plant you want to add your sensor to:</label><br>
     <select id="plant" name="plant">
-        <option>Other</option>
+
     </select><br><br>
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="name"><br>
     <label for="uom">Unit Of Measurement:</label><br>
     <input type="text" id="uom" name="uom"><br><br>
     <button onclick = "addSensor()">Submit</button>
+    </div>
+    <div class="right">
 <h1>Remove Sensor</h1>
     <p>Please choose the sensor you want to remove from the dropdown</p>
 <div class="dropdown">
@@ -38,6 +41,7 @@
     <div class="dropdown-content-remove">
     </div>
 </div>
+    </div>
 </div>
 </body>
 </html>
