@@ -22,22 +22,22 @@ public class StatusService {
     @Autowired
     private AcceptableRangeRepository acceptableRangeRepository;
 
-    public Plants updateStatus(Plants plant){
+    public Plants updateStatus(Plants plant) {
         int readingsOutOfBoundsCounter = 0;
         Iterable<Readings> readings = readingsRepository.getLatestReadingsById(plant.getId().toString());
         int countOfSensors = 0;
-        for(Readings reading : readings){
+        for (Readings reading : readings) {
             countOfSensors++;
             AcceptableRange acceptableRange = acceptableRangeRepository.getAcceptableRangeBySensorId(String.valueOf(reading.getSensorLookupId()));
-            if(reading.getReading() > acceptableRange.getUpperBoundry() || reading.getReading() < acceptableRange.getLowerBoundry()){
+            if (reading.getReading() > acceptableRange.getUpperBoundry() || reading.getReading() < acceptableRange.getLowerBoundry()) {
                 readingsOutOfBoundsCounter++;
             }
         }
-        if(readingsOutOfBoundsCounter == 0){
+        if (readingsOutOfBoundsCounter == 0) {
             plant.setStatus("Green");
-        }else if(readingsOutOfBoundsCounter < countOfSensors){
+        } else if (readingsOutOfBoundsCounter < countOfSensors) {
             plant.setStatus("Amber");
-        }else{
+        } else {
             plant.setStatus("Red");
         }
         plantsRepository.save(plant);

@@ -38,6 +38,7 @@ function displayDetails(plantID) {
             $(".plant-details").empty();
             $('.tableBody').empty();
             $(".plant-details").append('<p> Name: ' + res.name + '</p><br><p> Location: ' + res.location + '</p><br><p> Status: ' + res.status + '</p>');
+            //nested ajax call to stop problem with asynchronous call
             $.ajax({
                 url: "/getReadings/ByPlantId/" + plantID,
                 type: 'GET',
@@ -47,6 +48,8 @@ function displayDetails(plantID) {
                         $('#readings').show();
                         $('.tableBody').append('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + ' ' + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td><td id = "bounds' + res[x].sensorLookupId + '"></td></tr>');
                         console.log('<tr><td>' + res[x].sensorName + '</td><td>' + res[x].reading + ' ' + res[x].unitOfMeasurement + '</td><td>' + res[x].timestamp + '</td><td id = "bounds' + res[x].sensorLookupId + '"></td></tr>');
+                        //get the acceptable bounds within success method
+                        //to handle the fact that it is an asynchronous call
                         isWithinBounds(res[x].sensorLookupId, res[x].reading);
                     }
                 },

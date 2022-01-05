@@ -224,6 +224,19 @@ public class APIControllersTest {
     }
 
     @Test
+    public void addNewReading_success() throws Exception {
+        Mockito.when(readingsRepository.save(testReadings1)).thenReturn(testReadings1);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/addReading")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapper.writeValueAsString(testSensors2)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", notNullValue()))
+                .andExpect(jsonPath("$", is("reading added")));
+    }
+
+    @Test
     public void deletePlantById_success() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/deletePlant/1")

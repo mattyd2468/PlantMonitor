@@ -123,6 +123,14 @@ public class APIControllers {
         return readingsRepository.getLatestReadingsById(id);
     }
 
+    @PostMapping(path = "/addReading", consumes = "application/json")
+    public @ResponseBody
+    String addNewReading(@RequestBody Readings reading) {
+        readingsRepository.save(reading);
+        System.out.println("Added reading with the following details: " + reading.toString());
+        return "reading added";
+    }
+
     @GetMapping(path = "/getAcceptableBounds/singleSensor/{id}")
     public @ResponseBody
    AcceptableRange getAcceptableRangeBySensorId(@PathVariable String id) {

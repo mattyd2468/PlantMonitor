@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/navBar.css">
@@ -9,11 +10,12 @@
     <script src="javascript/addRemoveSensor.js"></script>
     <title>Add/Remove Sensor</title>
 </head>
+
 <body>
 <div class="topnav" id="myTopnav">
     <a th:href="@{home}">Home</a>
     <a th:href="@{addRemovePlant}">Add/Remove Plant</a>
-    <a th:href="@{addRemoveSensor}"  class="active">Add/Remove Sensor</a>
+    <a th:href="@{addRemoveSensor}" class="active">Add/Remove Sensor</a>
     <a th:href="@{assignSensor}">Assign Sensor</a>
     <a href="javascript:void(0);" class="icon" onclick="responsiveNavBar()">
         <i class="fa fa-bars"></i>
@@ -21,27 +23,28 @@
 </div>
 <div class="page-container">
     <div class="left">
-<h1>Add Sensor</h1>
-    <p>Please use the below form to enter your new plants details</p>
-    <label for="plant">Choose the plant you want to add your sensor to:</label><br>
-    <select id="plant" name="plant">
+        <h1>Add Sensor</h1>
+        <p>Please use the below form to enter your new plants details</p>
+        <label for="plant">Choose the plant you want to add your sensor to:</label><br>
+        <select id="plant" name="plant">
 
-    </select><br><br>
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name"><br>
-    <label for="uom">Unit Of Measurement:</label><br>
-    <input type="text" id="uom" name="uom"><br><br>
-    <button onclick = "addSensor()">Submit</button>
+        </select><br><br>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="uom">Unit Of Measurement:</label><br>
+        <input type="text" id="uom" name="uom"><br><br>
+        <button onclick="addSensor()">Submit</button>
     </div>
     <div class="right">
-<h1>Remove Sensor</h1>
-    <p>Please choose the sensor you want to remove from the dropdown</p>
-<div class="dropdown">
-    <button class="dropbtn">Choose Sensor</button>
-    <div class="dropdown-content-remove">
-    </div>
-</div>
+        <h1>Remove Sensor</h1>
+        <p>Please choose the sensor you want to remove from the dropdown</p>
+        <div class="dropdown">
+            <button class="dropbtn">Choose Sensor</button>
+            <div class="dropdown-content-remove">
+            </div>
+        </div>
     </div>
 </div>
 </body>
+
 </html>
