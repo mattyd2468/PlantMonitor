@@ -23,6 +23,17 @@ $(document).ready(function() {
             }
         }
     });
+
+$("#type").change(function(){
+   if($(this).val()=="Other")
+   {
+      alert("This functionality is not working yet. Please choose an existing plant type");
+   }
+});
+    //function to check if plant type is other
+    //if option in form is other
+    //show the form input for adding a plant to plant lookup
+    //change add plant function to add plant lookup first
 });
 
 function deletePlantWithId(id) {

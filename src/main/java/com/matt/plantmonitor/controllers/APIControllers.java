@@ -126,7 +126,7 @@ public class APIControllers {
     @PostMapping(path = "/addReading", consumes = "application/json")
     public @ResponseBody
     String addNewReading(@RequestBody Readings reading) {
-        readingsRepository.save(reading);
+        readingsRepository.insertReading(reading.getPlantLookupId(), reading.getSensorLookupId(), reading.getReading());
         System.out.println("Added reading with the following details: " + reading.toString());
         return "reading added";
     }

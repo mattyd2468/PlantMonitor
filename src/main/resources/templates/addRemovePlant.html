@@ -30,7 +30,8 @@
         <label for="location">Location:</label><br>
         <input type="text" id="location" name="location"><br>
         <label for="type">Choose a plant type or 'Other' if not available:</label><br>
-        <select id="type" name="type">
+        <select class = "select" id="type" name="type">
+            <option value="" disabled selected>Select your option</option>
             <option>Other</option>
         </select><br><br>
         <button onclick = "addPlant()">Submit</button>

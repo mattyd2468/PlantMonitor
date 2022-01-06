@@ -31,4 +31,14 @@ public interface ReadingsRepository extends CrudRepository<Readings, Integer> {
    void deleteReadingsBySensorId(
             @Param("id") String id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "insert into plantmonitorDB.readings (plant_lookup_id, sensor_lookup_id, reading) VALUES (:plantLookupId, :sensorLookupId, :reading)",
+            nativeQuery = true)
+    void insertReading(
+            @Param("plantLookupId") int plantLookupId,
+            @Param("sensorLookupId") int sensorLookupId,
+            @Param("reading") float reading
+    );
+
 }
